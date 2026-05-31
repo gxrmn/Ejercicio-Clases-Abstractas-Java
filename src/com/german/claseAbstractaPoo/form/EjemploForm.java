@@ -1,12 +1,7 @@
 package com.german.claseAbstractaPoo.form;
 
-import com.german.claseAbstractaPoo.form.elementos.ElementoForm;
-import com.german.claseAbstractaPoo.form.elementos.InputForm;
-import com.german.claseAbstractaPoo.form.elementos.SelectForm;
-import com.german.claseAbstractaPoo.form.elementos.TextAreaForm;
+import com.german.claseAbstractaPoo.form.elementos.*;
 import com.german.claseAbstractaPoo.form.elementos.select.Opcion;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,21 +16,27 @@ public class EjemploForm {
         TextAreaForm experiencia = new TextAreaForm("exp", 5,9);
 
         SelectForm lenguaje = new SelectForm("lenguaje");
-        Opcion java = new Opcion("1", "Java");
-        lenguaje.addOpcion(java);
-        lenguaje.addOpcion(new Opcion("2", "Python"))
-        .addOpcion(new Opcion("3", "JavaScript"))
+
+        lenguaje.addOpcion(new Opcion("1", "Java"))
+        .addOpcion(new Opcion("2", "Python"))
+        .addOpcion(new Opcion("3", "JavaScript").setSelected())
         .addOpcion(new Opcion("4", "TypeScript"))
         .addOpcion(new Opcion("5", "PHP"));
 
+        ElementoForm saludar = new ElementoForm("saludo") {
+            @Override
+            public String dibujarHtml() {
+                return "<input disabled name='" + this.nombre + "' value=\"" + this.valor + "\">";
+            }
+        };
+        saludar.setValor("Hola que tal este campo esta deshabilitado!");
         username.setValor("jhone.doe");
         password.setValor("12345");
         email.setValor("jhoncoffe@email.com");
         edad.setValor("22");
         experiencia.setValor("... 1 año de experiencia en desarrollo backend con java ...");
-        java.setSelected(true);
 
-        List<ElementoForm> elementos = Arrays.asList(username,password,email,edad,experiencia,lenguaje);
+        List<ElementoForm> elementos = Arrays.asList(username,password,email,edad,experiencia,lenguaje,saludar);
 
         for(ElementoForm e: elementos){
             System.out.println(e.dibujarHtml());
